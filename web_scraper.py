@@ -25,7 +25,7 @@ def check_price():
 
     title = soup.find('data-reactid' == '49').get_text()
     price = soup.find("data-reactid" == "50").get_text()
-    converted_price = price[495:501]
+    converted_price = price[511:517]
     #Determines the current time and date
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y %H:%M")
@@ -33,16 +33,16 @@ def check_price():
     #print("\n" + price)
 
     #These two while loops check the price and send an email, if necessary.
-    while converted_price > '500':
-        print("Date/Time: " + dt_string)
-        print("The current price is $" + converted_price)
-        send_mail()
-        time.sleep(60)
-        continue
-
-    while converted_price < '500':
-        print("Whoops, the current stock price is $" + converted_price + ". We'll send you an email when it goes above $500.")
-        break
+    while converted_price != '500':
+        if converted_price > '500':
+            print("Date/Time: " + dt_string)
+            print("The current price is $" + converted_price)
+            send_mail()
+            time.sleep(60)
+            continue
+        else:
+            print("Whoops, the current stock price is below $500. We'll send you an email when it goes above $500.")
+            break
 
 #This function sets up the email to send
 def send_mail():
